@@ -35,14 +35,12 @@ void SiebDesEratosthenesParaVersuch1(int n) {
 	for(auto i = 2; i*i <= n ; i++){
 		if(boolVector[i] == true){
 			tbb::parallel_for(tbb::blocked_range<int>(i+i,n), [&boolVector, &i, &n ](tbb::blocked_range<int> range){
-				//cout << "i:" << i << "->" << range.begin() << "-" << range.end() << "; ";
 				int j = range.begin();
 				while(j % i != 0 && j < range.end()){
 					j++;
 
 				}
 				while(j < range.end()){
-			//		cout << "--> !" << j << "!   "  ;
 					boolVector[j] = false;
 					j = j + i;
 				}
@@ -72,11 +70,7 @@ void SiebDesEratosthenesParaVersuch1(int n) {
 	}*/
 
 	// --Ausgabe der Primzahlen.
-	/*std::cout << std::endl;
-	for(unsigned int i=2; i < boolVector.size();i++)
-		if(boolVector[i]==true)
-			std::cout << std::setw(5) << i;
-		std::cout << std::endl;*/
+	//ausgabeausgabeBoolVector(boolVector)
 }
 
 void SiebDesEratosthenes(int n) {
@@ -95,89 +89,86 @@ void SiebDesEratosthenes(int n) {
 	}
 
 	// --Ausgabe der Primzahlen.
-	/*std::cout << std::endl;
-	for(unsigned int i=2; i < boolVector.size();i++)
-		if(boolVector[i-2]==true)
-			std::cout << std::setw(5) << i;
-		std::cout << std::endl;*/
+	//ausgabeausgabeBoolVector(boolVector)
 }
 
 void SiebDesEratosthenesParaVersuch2(int n) {
 	// --Feld initialisieren.
 	tbb::concurrent_vector<bool> boolVector(n,true);
-
-	/*std::cout << std::endl;
-		for(unsigned int i=2; i < boolVector.size();i++)
-			std::cout << std::setw(5) << i;
-			std::cout <<  std::endl;*/
-
 	for(auto i = 2; i*i <= n ; i++){
 		if(boolVector[i] == true){
 			tbb::parallel_for(tbb::blocked_range<int>(i,(n/i)),
 					[&boolVector, &i](tbb::blocked_range<int> range){
 				//cout << "i:" << i << "->" << range.begin()*i << "-" << range.end()*i << "; ";
-				for(int j = range.begin(); j <= range.end(); j = j + i){
+				//int rangeEnd = range.end();
+				for(int rangeEnd = range.end(), j = range.begin(); j < rangeEnd; j = j + i){
 					//cout << "--> !" << j << "!   "  ;
 					boolVector[j*i] = false;
 				}
 			});
-			//cout << endl;
 		}
 	};
+
 
 	//cout << endl;
 
 	// --Ausgabe der Primzahlen.
-	/*std::cout << std::endl;
-	for(unsigned int i=2; i < boolVector.size();i++)
-		if(boolVector[i]==true)
-			std::cout << std::setw(5) << i;
-		std::cout << std::endl;*/
+	//ausgabeausgabeBoolVector(boolVector)
 }
 
 void SiebDesEratosthenesSeqVersuch2(int n) {
 	// --Feld initialisieren.
 	tbb::concurrent_vector<bool> boolVector(n,true);
-
+	//cout << "init abgeschlossen" << endl;
 	for(auto i = 2; i*i <= n ; i++){
-		if(boolVector[i] == true){
-			[&boolVector, &i,&n](tbb::blocked_range<int> range){
-				for(int j = i; j <= n/i; j = j + i){
-					boolVector[j*i] = false;
-				}
-			};
+		//cout << i << endl;
+		if(boolVector.at(i) == true){
+			for(int j = i; j < n/i; j = j + i){
+				//cout << j*i << endl;
+				boolVector.at(j*i) = false;
+			}
 		}
-	};
+	}
 
 	//cout << endl;
 
 	// --Ausgabe der Primzahlen.
-	/*std::cout << std::endl;
-	for(unsigned int i=2; i < boolVector.size();i++)
-		if(boolVector[i]==true)
-			std::cout << std::setw(5) << i;
-		std::cout << std::endl;*/
+	//ausgabeausgabeBoolVector(boolVector)
+}
+
+void ausgabeBoolVector(tbb::concurrent_vector<bool> boolVector){
+	std::cout << std::endl;
+		for(unsigned int i=2; i < boolVector.size();i++)
+			if(boolVector[i]==true)
+				std::cout << std::setw(5) << i;
+		std::cout << std::endl;
 }
 
 int main() {
-	int anzahlZahlen = 1000000000;
-	clock_t start;
+	int anzahlZahlen = 1 << 30;
+	clock_t start, startPara;
 	int laufzeit;
+	time_t t;
+
 
 	/*start = clock();
 	SiebDesEratosthenes(anzahlZahlen);
 	laufzeit = (clock() - start);
 	cout << laufzeit<<" <-- Laufzeit sequentiell"<<endl;*/
 
-	start = clock();
-	SiebDesEratosthenesSeqVersuch2(anzahlZahlen);
-	laufzeit = (clock() - start);
-	cout << laufzeit<< " <-- Laufzeit SeqVersuch2" << endl;
+	//start = clock();
 
-	start = clock();
+	cout << "Start" << endl;
+	t = time(NULL);
+	SiebDesEratosthenesSeqVersuch2(anzahlZahlen);
+	cout << time(NULL) - t << endl;
+	//cout << (clock() - start) << " <-- Laufzeit SeqVersuch2" << endl;
+
+	//startPara = clock();
+	t = time(NULL);
 	SiebDesEratosthenesParaVersuch2(anzahlZahlen);
-	laufzeit = (clock() - start);
-	cout << laufzeit<< " <-- Laufzeit ParaVersuch2" << endl;
+	cout << time(NULL) -t << endl;
+	//cout << (clock() - startPara) << " <-- Laufzeit ParaVersuch2" << endl;
 
 	/*start = clock();
 	SiebDesEratosthenesParaVersuch1(anzahlZahlen);
