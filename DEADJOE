@@ -1,0 +1,41 @@
+
+*** These modified files were found in JOE when it aborted on Mon Nov 14 16:57:24 2016
+*** JOE was aborted because the terminal closed
+
+*** Datei '(Unbenannt)'
+/home/hrehmege/PVA/Praktikum/PVA/.git/COMMIT_EDITMSG
+
+*** Datei '/home/hrehmege/PVA/Praktikum/PVA/.git/COMMIT_EDITMSG'
+
+
+# Bitte
+ geben Sie eine Commit-Beschreibung für Ihre Änderungen ein. Zeilen,
+# die mit '#' beginnen, werden ignoriert, und eine leere Beschreibung
+# bricht den Commit ab.
+# Explizite Pfade ohne -i oder -o angegeben; nehme --only an
+#
+# Commit-Ersteller: Hauke Rehme genannt Schlueter <hrehmege@si0024-25a.intra.edvsz>
+#
+# Auf Branch master
+# Ihr Branch ist auf dem selben Stand wie 'origin/master'.
+#
+# zum Commit vorgemerkte Änderungen:
+#	geändert:       src/PvaPrak2.cpp
+#
+# Änderungen, die nicht zum Commit vorgemerkt sind:
+#	geändert:       Debug/PvaPrak2
+#	geändert:       Debug/src/PvaPrak2.d
+#	geändert:       Debug/src/PvaPrak2.o
+#	geändert:       Debug/src/subdir.mk
+#
+# Unversionierte Dateien:
+#	../.metadata/
+#	.settings/
+#	../RemoteSystemsTempFiles/
+#
+
+*** Datei '* Startup Log *'
+Processing '/etc/joe/editorrc'...
+Processing '/etc/joe/ftyperc'...
+Finished processing /etc/joe/ftyperc
+Finished processing /etc/joe/editorrc
