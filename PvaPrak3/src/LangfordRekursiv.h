@@ -8,10 +8,13 @@
 #ifndef LANGFORDREKURSIV_H_
 #define LANGFORDREKURSIV_H_
 
+#include <bitset>
+
+
 class LangfordRekursiv {
 public:
 	LangfordRekursiv();
-	void berechneLoesungen();
+	void berechneLoesungen(int anzFarben, int anzSteineProFarbe, bitset<64> muster);
 	virtual ~LangfordRekursiv();
 
 	int anzSteineProFarbe;
